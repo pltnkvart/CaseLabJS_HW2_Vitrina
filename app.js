@@ -45,7 +45,10 @@ function getIndex(productId) {
 
 function removeFromBasket(productId) {
     // TODO: описать логику удаления товара из корзины
-    order.splice(getIndex(productId), 1);
+    const index = getIndex(productId);
+    if(index > -1){
+        order.splice(index, 1);
+    }
     // Эти строчки не трогаем, они отвечают за переотрисовку страницы
     renderCart();
     rerenderTotalPrice();
