@@ -28,9 +28,12 @@ function addToBasket(productId) {
     if (isInOrder(productId)) {
         alert("Этот товар уже в корзине");
     } else {
-        order.push(products[productId - 1]);
+        const product = products.find(item => item.id === productId);
+        if (product) {
+            order = order.concat([product]);
+        }
     }
-    
+
     // Эти строчки не трогаем, они отвечают за переотрисовку страницы
     renderCart();
     rerenderTotalPrice();
