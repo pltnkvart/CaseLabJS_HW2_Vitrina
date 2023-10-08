@@ -19,26 +19,30 @@ const products = [
 let order = [];
 
 function isInOrder(productId) {
-    return (order.includes(products[productId - 1]));
+    return order.some(item => item.id === productId);
 }
 
 function addToBasket(productId) {
     // TODO: добавить проверку наличия товара в заказе (при наличии выдать alert, что товар уже в корзине)
+    // TODO: если товар еще не в корзине, добавить его из массива products
     if (isInOrder(productId)) {
         alert("Этот товар уже в корзине");
     } else {
         order.push(products[productId - 1]);
     }
-    // TODO: если товар еще не в корзине, добавить его из массива products
-
+    
     // Эти строчки не трогаем, они отвечают за переотрисовку страницы
     renderCart();
     rerenderTotalPrice();
 }
 
+function getIndex(productId) {
+    return order.findIndex(item => item.id === productId);
+}
+
 function removeFromBasket(productId) {
     // TODO: описать логику удаления товара из корзины
-
+    order.splice(getIndex(productId), 1);
     // Эти строчки не трогаем, они отвечают за переотрисовку страницы
     renderCart();
     rerenderTotalPrice();
@@ -47,10 +51,7 @@ function removeFromBasket(productId) {
 
 function rerenderTotalPrice() {
     // TODO: опишите функционал подсчета общей стоимости заказа
-    let totalPrice = 0;
-    order.forEach(item => {
-        totalPrice += item.price;
-    })
+    const totalPrice = order.reduce((total, item) => total + item.price, 0);
     // Не меняйте эту строчку
     document.getElementById('total').innerText = totalPrice;
 }
