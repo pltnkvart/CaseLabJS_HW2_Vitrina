@@ -18,9 +18,17 @@ const products = [
 
 let order = [];
 
+function isInOrder(productId) {
+    return (order.includes(products[productId - 1]));
+}
+
 function addToBasket(productId) {
     // TODO: добавить проверку наличия товара в заказе (при наличии выдать alert, что товар уже в корзине)
-
+    if (isInOrder(productId)) {
+        alert("Этот товар уже в корзине");
+    } else {
+        order.push(products[productId - 1]);
+    }
     // TODO: если товар еще не в корзине, добавить его из массива products
 
     // Эти строчки не трогаем, они отвечают за переотрисовку страницы
@@ -39,8 +47,10 @@ function removeFromBasket(productId) {
 
 function rerenderTotalPrice() {
     // TODO: опишите функционал подсчета общей стоимости заказа
-
-
+    let totalPrice = 0;
+    order.forEach(item => {
+        totalPrice += item.price;
+    })
     // Не меняйте эту строчку
     document.getElementById('total').innerText = totalPrice;
 }
